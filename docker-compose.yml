@@ -1,14 +1,21 @@
 services:
-  postgres:
-    image: postgres:16-alpine
+  backend:
+    build: ./backend
+    container_name: codefossils-backend
     environment:
-      POSTGRES_DB: codefossils
-      POSTGRES_USER: codefossils
-      POSTGRES_PASSWORD: codefossils
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      DATABASE_URL: postgres://codefossils:${POSTGRES_PASSWORD}@host.docker.internal:5432/codefossils?sslmode=disable
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
+      PORT: "8080"
+      REFRESH_INTERVAL: ${REFRESH_INTERVAL:-6h}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
 
-volumes:
-  pgdata:
+  frontend:
+    build: ./frontend
+    container_name: codefossils-frontend
+    ports:
+      - "4000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
