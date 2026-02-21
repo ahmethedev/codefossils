@@ -26,10 +26,10 @@
 }
 
 * { box-sizing: border-box; }
-body { margin: 0; background: #050510; }
+body { margin: 0; background: #faf8f4; }
 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #ccc8c0; border-radius: 3px; }
 
-input::placeholder { color: #4a4a6a; }
+input::placeholder { color: #a0a0b4; }

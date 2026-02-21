@@ -22,17 +22,17 @@ export default function Controls({
           style={{
             width: "100%", maxWidth: 420,
             padding: "10px 16px",
-            background: "#12122a",
-            border: "1px solid #2a2a4a",
+            background: "#ffffff",
+            border: "1px solid #d8d4cc",
             borderRadius: 10,
-            color: "#d0cee8",
+            color: "#1a1a2e",
             fontSize: 14,
             fontFamily: "'IBM Plex Sans', sans-serif",
             outline: "none",
             transition: "border-color 0.2s",
           }}
-          onFocus={e => e.target.style.borderColor = "#4a4a7a"}
-          onBlur={e => e.target.style.borderColor = "#2a2a4a"}
+          onFocus={e => e.target.style.borderColor = "#6366f1"}
+          onBlur={e => e.target.style.borderColor = "#d8d4cc"}
         />
       </div>
 
@@ -48,9 +48,9 @@ export default function Controls({
               display: "flex", alignItems: "center", gap: 5,
               padding: "6px 14px",
               borderRadius: 8,
-              border: selectedCategory === cat.id ? "1px solid #6366f1" : "1px solid #1e1e38",
-              background: selectedCategory === cat.id ? "#6366f118" : "#12122a",
-              color: selectedCategory === cat.id ? "#a5a3f0" : "#6a6a8a",
+              border: selectedCategory === cat.id ? "1px solid #6366f1" : "1px solid #ddd8d0",
+              background: selectedCategory === cat.id ? "#eef2ff" : "#ffffff",
+              color: selectedCategory === cat.id ? "#4f46e5" : "#6a6a88",
               fontSize: 13,
               fontFamily: "'IBM Plex Sans', sans-serif",
               fontWeight: 500,
@@ -78,9 +78,9 @@ export default function Controls({
               style={{
                 padding: "5px 12px", borderRadius: 6, fontSize: 12,
                 fontFamily: "'IBM Plex Mono', monospace",
-                background: sortBy === s.id ? "#1e1e3a" : "transparent",
-                border: sortBy === s.id ? "1px solid #3a3a5a" : "1px solid transparent",
-                color: sortBy === s.id ? "#b0b0d0" : "#555578",
+                background: sortBy === s.id ? "#eef2ff" : "transparent",
+                border: sortBy === s.id ? "1px solid #c7d2fe" : "1px solid transparent",
+                color: sortBy === s.id ? "#4338ca" : "#8888a0",
                 cursor: "pointer", transition: "all 0.2s",
               }}
             >
@@ -93,8 +93,8 @@ export default function Controls({
           disabled={loading}
           style={{
             padding: "6px 16px", borderRadius: 8,
-            background: "transparent", border: "1px solid #2a2a4a",
-            color: "#7777aa", fontSize: 13,
+            background: "transparent", border: "1px solid #d8d4cc",
+            color: "#5a5a78", fontSize: 13,
             fontFamily: "'IBM Plex Sans', sans-serif",
             cursor: loading ? "not-allowed" : "pointer",
             opacity: loading ? 0.5 : 1,

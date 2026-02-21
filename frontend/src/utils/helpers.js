@@ -8,15 +8,15 @@ export function timeAgo(dateStr) {
 }
 
 export function scoreColor(score) {
-  if (score >= 70) return "#4ade80";
-  if (score >= 40) return "#facc15";
-  return "#94a3b8";
+  if (score >= 70) return "#059669";
+  if (score >= 40) return "#d97706";
+  return "#6366f1";
 }
 
 export function scoreGlowColor(score) {
-  if (score >= 70) return "#4ade80";
-  if (score >= 40) return "#facc15";
-  return "#6366f1";
+  if (score >= 70) return "#10b981";
+  if (score >= 40) return "#f59e0b";
+  return "#818cf8";
 }
 
 export const CATEGORIES = [

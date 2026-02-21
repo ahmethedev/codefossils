@@ -11,8 +11,8 @@ export default function Tombstone({ repo, index, onClick }) {
     <div
       onClick={onClick}
       style={{
-        background: "linear-gradient(165deg, #1a1a2e 0%, #16162a 50%, #0f0f1e 100%)",
-        border: "1px solid #2a2a4a",
+        background: "#ffffff",
+        border: "1px solid #e8e4de",
         borderRadius: 14,
         padding: "24px 22px 20px",
         cursor: "pointer",
@@ -26,19 +26,19 @@ export default function Tombstone({ repo, index, onClick }) {
         animationDelay: `${index * 60}ms`,
       }}
       onMouseEnter={e => {
-        e.currentTarget.style.border = "1px solid #4a4a7a";
+        e.currentTarget.style.border = "1px solid #c7d2fe";
         e.currentTarget.style.transform = "translateY(-4px)";
-        e.currentTarget.style.boxShadow = "0 12px 40px rgba(100, 80, 200, 0.12)";
+        e.currentTarget.style.boxShadow = "0 12px 40px rgba(99, 102, 241, 0.10)";
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.border = "1px solid #2a2a4a";
+        e.currentTarget.style.border = "1px solid #e8e4de";
         e.currentTarget.style.transform = "translateY(0)";
         e.currentTarget.style.boxShadow = "none";
       }}
     >
       <div style={{
-        position: "absolute", top: 0, left: 0, right: 0, height: 2,
-        background: `linear-gradient(90deg, transparent, ${scoreGlowColor(score)}40, transparent)`,
+        position: "absolute", top: 0, left: 0, right: 0, height: 3,
+        background: `linear-gradient(90deg, transparent, ${scoreGlowColor(score)}90, transparent)`,
       }} />
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
@@ -48,7 +48,7 @@ export default function Tombstone({ repo, index, onClick }) {
 
       <h3 style={{
         fontFamily: "'Playfair Display', Georgia, serif",
-        fontSize: 17, fontWeight: 700, color: "#e2e0f0",
+        fontSize: 17, fontWeight: 700, color: "#1a1a2e",
         margin: "0 0 6px", lineHeight: 1.3,
         display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
       }}>
@@ -57,7 +57,7 @@ export default function Tombstone({ repo, index, onClick }) {
 
       <p style={{
         fontFamily: "'IBM Plex Sans', sans-serif",
-        fontSize: 13, color: "#8888aa", margin: "0 0 16px",
+        fontSize: 13, color: "#5a5a78", margin: "0 0 16px",
         lineHeight: 1.55, minHeight: 40,
         display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden",
       }}>
@@ -67,7 +67,7 @@ export default function Tombstone({ repo, index, onClick }) {
       <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
         {(repo.topics || []).slice(0, 3).map(t => (
           <span key={t} style={{
-            fontSize: 11, color: "#7a7a9a", background: "#1e1e38",
+            fontSize: 11, color: "#6a6a88", background: "#f0ede8",
             borderRadius: 5, padding: "2px 8px",
             fontFamily: "'IBM Plex Mono', monospace",
           }}>{t}</span>
@@ -76,14 +76,14 @@ export default function Tombstone({ repo, index, onClick }) {
 
       <div style={{
         display: "flex", justifyContent: "space-between", alignItems: "center",
-        paddingTop: 12, borderTop: "1px solid #1e1e38",
+        paddingTop: 12, borderTop: "1px solid #ece9e4",
       }}>
-        <div style={{ display: "flex", gap: 12, fontSize: 12, color: "#6a6a8a", fontFamily: "'IBM Plex Mono', monospace" }}>
+        <div style={{ display: "flex", gap: 12, fontSize: 12, color: "#8888a0", fontFamily: "'IBM Plex Mono', monospace" }}>
           <span>{"\u2605"} {repo.stargazers_count}</span>
           <span>{"\u2442"} {repo.forks_count}</span>
-          {lang && <span style={{ color: "#8888cc" }}>{lang}</span>}
+          {lang && <span style={{ color: "#6366f1" }}>{lang}</span>}
         </div>
-        <span style={{ fontSize: 11, color: "#555578", fontFamily: "'IBM Plex Mono', monospace" }}>
+        <span style={{ fontSize: 11, color: "#a0a0b4", fontFamily: "'IBM Plex Mono', monospace" }}>
           {"\u2620"} {pushed}
         </span>
       </div>
