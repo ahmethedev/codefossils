@@ -6,16 +6,20 @@ import (
 	"net/http"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/ahmetburakdinc/codefossils/internal/database"
 	"github.com/ahmetburakdinc/codefossils/internal/github"
 	"github.com/ahmetburakdinc/codefossils/internal/models"
 )
 
+const refreshCooldown = 5 * time.Minute
+
 type RepoHandler struct {
-	store    *database.RepoStore
-	ghClient *github.Client
-	mu       sync.Mutex
+	store         *database.RepoStore
+	ghClient      *github.Client
+	mu            sync.Mutex
+	lastRefreshAt time.Time
 }
 
 func NewRepoHandler(store *database.RepoStore, ghClient *github.Client) *RepoHandler {
@@ -64,6 +68,24 @@ func (h *RepoHandler) RefreshRepos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Cooldown check — reject if last refresh was less than 5 minutes ago
+	h.mu.Lock()
+	sinceLastRefresh := time.Since(h.lastRefreshAt)
+	if sinceLastRefresh < refreshCooldown {
+		remaining := refreshCooldown - sinceLastRefresh
+		h.mu.Unlock()
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusTooManyRequests)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"error":      "refresh on cooldown",
+			"retry_after": int(remaining.Seconds()),
+		})
+		return
+	}
+	h.lastRefreshAt = time.Now()
+	h.mu.Unlock()
+
+	// Concurrency check — only one refresh at a time
 	if !h.mu.TryLock() {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusConflict)
