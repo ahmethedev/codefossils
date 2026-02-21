@@ -156,11 +156,26 @@ export default function App() {
         textAlign: "center",
       }}>
         <p style={{
-          fontSize: 12, color: "#3a3a5a", margin: 0,
+          fontSize: 12, color: "#3a3a5a", margin: "0 0 8px",
           fontFamily: "'IBM Plex Mono', monospace",
         }}>
           {"\uD83E\uDD96"} CodeFossils — Every abandoned repo has a story. Give it a second life.
         </p>
+        <a
+          href="https://github.com/ahmethedev/codefossils"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 6,
+            fontSize: 12, color: "#555578", textDecoration: "none",
+            fontFamily: "'IBM Plex Mono', monospace",
+            transition: "color 0.2s",
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = "#8888cc"}
+          onMouseLeave={e => e.currentTarget.style.color = "#555578"}
+        >
+          {"\u2B50"} Star us on GitHub
+        </a>
       </footer>
 
       {/* Modal */}

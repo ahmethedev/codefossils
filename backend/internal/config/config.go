@@ -15,9 +15,8 @@ type Config struct {
 }
 
 func Load() (*Config, error) {
-	// Try .env in current dir, then parent dir (project root)
-	_ = godotenv.Load()
-	_ = godotenv.Load("../.env")
+	// Try .env from multiple likely locations
+	_ = godotenv.Load(".env", "../.env", "../../.env")
 
 	port := os.Getenv("PORT")
 	if port == "" {
