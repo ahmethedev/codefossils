@@ -1,14 +1,19 @@
-# CodeFossils
+<p align="center">
+  <img src="frontend/public/codefossilslogo.png" alt="CodeFossils" width="100" />
+</p>
+<h1 align="center">CodeFossils</h1>
+<p align="center">Discover abandoned GitHub repos with brilliant ideas worth reviving.</p>
 
-Unearth forgotten GitHub projects worth reviving with modern AI tools.
+---
 
-CodeFossils discovers abandoned repositories — projects with great ideas that were left behind. Browse, search, and find your next side project inspiration.
+Unearth forgotten GitHub projects — repositories with great ideas that were left behind. Browse, search, and find your next side project inspiration.
 
 ## Stack
 
 - **Backend:** Go + PostgreSQL
 - **Frontend:** React + Vite
 - **Data:** GitHub Search API (authenticated)
+- **Deploy:** Docker + Caddy
 
 ## Quick Start
 
@@ -54,6 +59,16 @@ npm run dev
 ```
 
 Open [http://localhost:5173](http://localhost:5173)
+
+## Production (Docker)
+
+```bash
+cp .env.example .env
+# Set GITHUB_TOKEN and POSTGRES_PASSWORD
+docker compose up -d --build
+```
+
+Frontend runs on port 4000 by default.
 
 ## API
 

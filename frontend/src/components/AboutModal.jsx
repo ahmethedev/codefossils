@@ -40,7 +40,7 @@ export default function AboutModal({ onClose }) {
       >
         {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <span style={{ fontSize: 32 }}>{"\uD83E\uDD96"}</span>
+          <img src="/codefossilslogo.png" alt="CodeFossils" style={{ width: 40, height: 40 }} />
           <button onClick={onClose} style={{
             background: "none", border: "1px solid #d8d4cc", borderRadius: 8,
             color: "#8888a0", fontSize: 14, cursor: "pointer", padding: "4px 12px",

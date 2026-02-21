@@ -6,12 +6,14 @@ export default function Header({ onAboutClick }) {
       textAlign: "center",
       borderBottom: "1px solid #e8e4de",
     }}>
-      <div style={{
-        fontSize: 48, marginBottom: 12,
-        animationName: "float", animationDuration: "4s", animationIterationCount: "infinite",
-      }}>
-        {"\uD83E\uDD96"}
-      </div>
+      <img
+        src="/codefossilslogo.png"
+        alt="CodeFossils logo"
+        style={{
+          width: 64, height: 64, marginBottom: 12,
+          animationName: "float", animationDuration: "4s", animationIterationCount: "infinite",
+        }}
+      />
       <h1 style={{
         fontFamily: "'Playfair Display', Georgia, serif",
         fontSize: "clamp(32px, 5vw, 52px)",

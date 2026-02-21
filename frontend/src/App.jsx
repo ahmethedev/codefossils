@@ -161,7 +161,7 @@ export default function App() {
           fontSize: 12, color: "#a0a0b4", margin: "0 0 8px",
           fontFamily: "'IBM Plex Mono', monospace",
         }}>
-          {"\uD83E\uDD96"} CodeFossils — Every abandoned repo has a story. Give it a second life.
+          <img src="/codefossilslogo.png" alt="CodeFossils" style={{ width: 16, height: 16, verticalAlign: "middle", marginRight: 4 }} /> CodeFossils — Every abandoned repo has a story. Give it a second life.
         </p>
         <a
           href="https://github.com/ahmethedev/codefossils"
