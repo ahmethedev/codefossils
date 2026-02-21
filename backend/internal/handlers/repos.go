@@ -29,18 +29,36 @@ func NewRepoHandler(store *database.RepoStore, ghClient *github.Client) *RepoHan
 	}
 }
 
+var validCategories = map[string]bool{
+	"all": true, "web": true, "mobile": true, "ai": true,
+	"dev-tools": true, "data": true, "game": true, "other": true,
+}
+
 func (h *RepoHandler) ListRepos(w http.ResponseWriter, r *http.Request) {
 	q := r.URL.Query()
 	category := q.Get("category")
 	sort := q.Get("sort")
 	search := q.Get("search")
 
+	// Validate category
+	if category != "" && !validCategories[category] {
+		category = ""
+	}
+
+	// Cap search length
+	if len(search) > 100 {
+		search = search[:100]
+	}
+
 	page, _ := strconv.Atoi(q.Get("page"))
 	if page < 1 {
 		page = 1
 	}
+	if page > 1000 {
+		page = 1000
+	}
 	perPage, _ := strconv.Atoi(q.Get("per_page"))
-	if perPage < 1 {
+	if perPage < 1 || perPage > 100 {
 		perPage = 30
 	}
 
