@@ -61,6 +61,8 @@ type ghRepo struct {
 	CreatedAt   string   `json:"created_at"`
 }
 
+var sortOptions = []string{"stars", "updated", "best-match"}
+
 func (c *Client) FetchStaleRepos() ([]models.Repo, error) {
 	twoYearsAgo := time.Now().AddDate(-2, 0, 0).Format("2006-01-02")
 
@@ -76,9 +78,12 @@ func (c *Client) FetchStaleRepos() ([]models.Repo, error) {
 	var allRepos []models.Repo
 
 	for _, q := range queries {
+		sortBy := sortOptions[rand.Intn(len(sortOptions))]
+		page := rand.Intn(10) + 1 // random page 1-10
+
 		searchQ := fmt.Sprintf("%s pushed:<%s stars:>5", q, twoYearsAgo)
-		apiURL := fmt.Sprintf("https://api.github.com/search/repositories?q=%s&sort=stars&order=desc&per_page=30",
-			url.QueryEscape(searchQ))
+		apiURL := fmt.Sprintf("https://api.github.com/search/repositories?q=%s&sort=%s&order=desc&per_page=30&page=%d",
+			url.QueryEscape(searchQ), sortBy, page)
 
 		req, err := http.NewRequest("GET", apiURL, nil)
 		if err != nil {
@@ -159,7 +164,7 @@ func (c *Client) FetchStaleRepos() ([]models.Repo, error) {
 			allRepos = append(allRepos, repo)
 		}
 
-		log.Printf("Fetched %d repos for query %q", len(result.Items), q)
+		log.Printf("Fetched %d repos for query %q (sort=%s, page=%d)", len(result.Items), q, sortBy, page)
 	}
 
 	log.Printf("Total unique repos fetched: %d", len(allRepos))
