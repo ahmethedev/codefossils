@@ -16,7 +16,7 @@ export default function App() {
   const [showAbout, setShowAbout] = useState(false);
   const [page, setPage] = useState(1);
 
-  const { repos, total, loading, error, refresh } = useRepos({
+  const { repos, total, loading, refreshing, error, refresh } = useRepos({
     category: selectedCategory,
     sort: sortBy,
     search: searchText,
@@ -74,6 +74,7 @@ export default function App() {
         onSortChange={handleSortChange}
         onRefresh={refresh}
         loading={loading}
+        refreshing={refreshing}
       />
 
       {/* Grid */}
@@ -103,7 +104,7 @@ export default function App() {
           </div>
         )}
 
-        {loading && (
+        {loading && !refreshing && (
           <div style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",

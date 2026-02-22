@@ -4,7 +4,7 @@ export default function Controls({
   searchText, onSearchChange,
   selectedCategory, onCategoryChange,
   sortBy, onSortChange,
-  onRefresh, loading,
+  onRefresh, loading, refreshing,
 }) {
   return (
     <div style={{
@@ -90,24 +90,26 @@ export default function Controls({
         </div>
         <button
           onClick={onRefresh}
-          disabled={loading}
+          disabled={refreshing}
           style={{
             padding: "6px 16px", borderRadius: 8,
-            background: "transparent", border: "1px solid #d8d4cc",
-            color: "#5a5a78", fontSize: 13,
+            background: refreshing ? "#eef2ff" : "transparent",
+            border: refreshing ? "1px solid #c7d2fe" : "1px solid #d8d4cc",
+            color: refreshing ? "#4338ca" : "#5a5a78",
+            fontSize: 13,
             fontFamily: "'IBM Plex Sans', sans-serif",
-            cursor: loading ? "not-allowed" : "pointer",
-            opacity: loading ? 0.5 : 1,
+            cursor: refreshing ? "not-allowed" : "pointer",
+            opacity: refreshing ? 0.85 : 1,
             transition: "all 0.2s",
           }}
         >
           <span style={{
             display: "inline-block",
-            animation: loading ? "spin 1s linear infinite" : "none",
+            animation: refreshing ? "spin 1s linear infinite" : "none",
           }}>
             {"\u21BB"}
           </span>
-          {loading ? " Digging..." : " Excavate more"}
+          {refreshing ? " Digging..." : " Excavate more"}
         </button>
       </div>
     </div>

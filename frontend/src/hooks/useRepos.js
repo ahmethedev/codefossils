@@ -5,6 +5,7 @@ export function useRepos({ category, sort, search, page = 1, perPage = 30 } = {}
   const [repos, setRepos] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const abortRef = useRef(null);
 
@@ -27,14 +28,33 @@ export function useRepos({ category, sort, search, page = 1, perPage = 30 } = {}
   }, [load]);
 
   const refresh = useCallback(async () => {
+    setRefreshing(true);
     try {
-      await refreshRepos();
-      // Wait a moment for backend to process, then reload
-      setTimeout(load, 2000);
+      const res = await refreshRepos();
+      // Poll until new data arrives or timeout
+      const prevTotal = total;
+      let attempts = 0;
+      const poll = async () => {
+        attempts++;
+        try {
+          const data = await fetchRepos({ category, sort, search, page, perPage });
+          if (data.total !== prevTotal || attempts >= 5) {
+            setRepos(data.repos);
+            setTotal(data.total);
+            setRefreshing(false);
+          } else {
+            setTimeout(poll, 2000);
+          }
+        } catch {
+          setRefreshing(false);
+        }
+      };
+      setTimeout(poll, 2000);
     } catch (err) {
       setError(err.message);
+      setRefreshing(false);
     }
-  }, [load]);
+  }, [load, total, category, sort, search, page, perPage]);
 
-  return { repos, total, loading, error, refresh, reload: load };
+  return { repos, total, loading, refreshing, error, refresh, reload: load };
 }
