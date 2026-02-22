@@ -6,6 +6,7 @@ import Tombstone from './components/Tombstone';
 import RepoModal from './components/RepoModal';
 import AboutModal from './components/AboutModal';
 import SkeletonCard from './components/SkeletonCard';
+import CookieBanner from './components/CookieBanner';
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -187,6 +188,7 @@ export default function App() {
       {showAbout && (
         <AboutModal onClose={() => setShowAbout(false)} />
       )}
+      <CookieBanner />
     </div>
   );
 }

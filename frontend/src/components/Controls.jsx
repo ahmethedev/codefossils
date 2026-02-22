@@ -101,7 +101,13 @@ export default function Controls({
             transition: "all 0.2s",
           }}
         >
-          {"\u21BB"} Excavate more
+          <span style={{
+            display: "inline-block",
+            animation: loading ? "spin 1s linear infinite" : "none",
+          }}>
+            {"\u21BB"}
+          </span>
+          {loading ? " Digging..." : " Excavate more"}
         </button>
       </div>
     </div>
