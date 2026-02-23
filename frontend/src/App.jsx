@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Controls from './components/Controls';
 import Tombstone from './components/Tombstone';
 import RepoModal from './components/RepoModal';
+import ReelsView from './components/ReelsView';
 import AboutModal from './components/AboutModal';
 import SkeletonCard from './components/SkeletonCard';
 import CookieBanner from './components/CookieBanner';
@@ -14,6 +15,7 @@ export default function App() {
   const [searchText, setSearchText] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [showAbout, setShowAbout] = useState(false);
+  const [viewMode, setViewMode] = useState("grid");
 
   const { repos, total, loading, loadingMore, refreshing, error, refresh, hasMore, loadMore } = useRepos({
     category: selectedCategory,
@@ -90,6 +92,8 @@ export default function App() {
         onRefresh={refresh}
         loading={loading}
         refreshing={refreshing}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
       />
 
       {/* Grid */}
@@ -220,6 +224,17 @@ export default function App() {
           {"\u2B50"} Star us on GitHub
         </a>
       </footer>
+
+      {/* Reels mode */}
+      {viewMode === "reels" && !loading && repos.length > 0 && (
+        <ReelsView
+          repos={repos}
+          loadMore={loadMore}
+          hasMore={hasMore}
+          loadingMore={loadingMore}
+          onClose={() => setViewMode("grid")}
+        />
+      )}
 
       {/* Modal */}
       {selectedRepo && (

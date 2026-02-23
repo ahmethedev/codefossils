@@ -5,6 +5,7 @@ export default function Controls({
   selectedCategory, onCategoryChange,
   sortBy, onSortChange,
   onRefresh, loading, refreshing,
+  viewMode, onViewModeChange,
 }) {
   return (
     <div style={{
@@ -88,29 +89,69 @@ export default function Controls({
             </button>
           ))}
         </div>
-        <button
-          onClick={onRefresh}
-          disabled={refreshing}
-          style={{
-            padding: "6px 16px", borderRadius: 8,
-            background: refreshing ? "#eef2ff" : "transparent",
-            border: refreshing ? "1px solid #c7d2fe" : "1px solid #d8d4cc",
-            color: refreshing ? "#4338ca" : "#5a5a78",
-            fontSize: 13,
-            fontFamily: "'IBM Plex Sans', sans-serif",
-            cursor: refreshing ? "not-allowed" : "pointer",
-            opacity: refreshing ? 0.85 : 1,
-            transition: "all 0.2s",
-          }}
-        >
-          <span style={{
-            display: "inline-block",
-            animation: refreshing ? "spin 1s linear infinite" : "none",
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          {/* View mode toggle */}
+          <div style={{
+            display: "flex",
+            border: "1px solid #d8d4cc",
+            borderRadius: 8,
+            overflow: "hidden",
           }}>
-            {"\u21BB"}
-          </span>
-          {refreshing ? " Digging..." : " Excavate more"}
-        </button>
+            <button
+              onClick={() => onViewModeChange("grid")}
+              title="Grid view"
+              style={{
+                padding: "6px 10px", border: "none",
+                background: viewMode === "grid" ? "#eef2ff" : "transparent",
+                color: viewMode === "grid" ? "#4338ca" : "#8888a0",
+                fontSize: 14, cursor: "pointer",
+                fontFamily: "'IBM Plex Mono', monospace",
+                transition: "all 0.2s",
+                borderRight: "1px solid #d8d4cc",
+              }}
+            >
+              {"\u25A6"}
+            </button>
+            <button
+              onClick={() => onViewModeChange("reels")}
+              title="Reels view"
+              style={{
+                padding: "6px 10px", border: "none",
+                background: viewMode === "reels" ? "#eef2ff" : "transparent",
+                color: viewMode === "reels" ? "#4338ca" : "#8888a0",
+                fontSize: 14, cursor: "pointer",
+                fontFamily: "'IBM Plex Mono', monospace",
+                transition: "all 0.2s",
+              }}
+            >
+              {"\u25AE"}
+            </button>
+          </div>
+
+          <button
+            onClick={onRefresh}
+            disabled={refreshing}
+            style={{
+              padding: "6px 16px", borderRadius: 8,
+              background: refreshing ? "#eef2ff" : "transparent",
+              border: refreshing ? "1px solid #c7d2fe" : "1px solid #d8d4cc",
+              color: refreshing ? "#4338ca" : "#5a5a78",
+              fontSize: 13,
+              fontFamily: "'IBM Plex Sans', sans-serif",
+              cursor: refreshing ? "not-allowed" : "pointer",
+              opacity: refreshing ? 0.85 : 1,
+              transition: "all 0.2s",
+            }}
+          >
+            <span style={{
+              display: "inline-block",
+              animation: refreshing ? "spin 1s linear infinite" : "none",
+            }}>
+              {"\u21BB"}
+            </span>
+            {refreshing ? " Digging..." : " Excavate more"}
+          </button>
+        </div>
       </div>
     </div>
   );
