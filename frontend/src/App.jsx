@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRepos } from './hooks/useRepos';
 import Header from './components/Header';
 import Controls from './components/Controls';
@@ -14,28 +14,43 @@ export default function App() {
   const [searchText, setSearchText] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [showAbout, setShowAbout] = useState(false);
-  const [page, setPage] = useState(1);
 
-  const { repos, total, loading, refreshing, error, refresh } = useRepos({
+  const { repos, total, loading, loadingMore, refreshing, error, refresh, hasMore, loadMore } = useRepos({
     category: selectedCategory,
     sort: sortBy,
     search: searchText,
-    page,
   });
+
+  // Infinite scroll sentinel
+  const sentinelRef = useRef(null);
+  const loadMoreRef = useRef(loadMore);
+  loadMoreRef.current = loadMore;
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreRef.current();
+        }
+      },
+      { rootMargin: '200px' }
+    );
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, []);
 
   const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
-    setPage(1);
   };
 
   const handleSortChange = (sort) => {
     setSortBy(sort);
-    setPage(1);
   };
 
   const handleSearchChange = (text) => {
     setSearchText(text);
-    setPage(1);
   };
 
   return (
@@ -148,8 +163,26 @@ export default function App() {
                 />
               ))}
             </div>
+
+            {loadingMore && (
+              <div style={{
+                display: "flex", justifyContent: "center",
+                padding: "32px 0 16px",
+              }}>
+                <div style={{
+                  width: 28, height: 28,
+                  border: "3px solid #e8e4de",
+                  borderTopColor: "#6366f1",
+                  borderRadius: "50%",
+                  animation: "spin 0.8s linear infinite",
+                }} />
+              </div>
+            )}
           </>
         )}
+
+        {/* Infinite scroll sentinel — always rendered */}
+        <div ref={sentinelRef} style={{ height: 1 }} />
       </main>
 
       {/* Footer */}
