@@ -164,29 +164,27 @@ export default function App() {
               ))}
             </div>
 
+            {loadingMore && (
+              <div style={{
+                display: "flex", flexDirection: "column", alignItems: "center",
+                padding: "20px 0 0", gap: 10,
+              }}>
+                <div style={{
+                  width: 36, height: 36,
+                  border: "3px solid #e8e4de",
+                  borderTopColor: "#6366f1",
+                  borderRadius: "50%",
+                  animation: "spin 0.8s linear infinite",
+                }} />
+                <p style={{
+                  fontSize: 13, color: "#8888a0", margin: 0,
+                  fontFamily: "'IBM Plex Mono', monospace",
+                }}>
+                  Unearthing more fossils...
+                </p>
+              </div>
+            )}
           </>
-        )}
-
-        {/* Loading more spinner — outside conditional so it always renders when needed */}
-        {loadingMore && (
-          <div style={{
-            display: "flex", flexDirection: "column", alignItems: "center",
-            padding: "40px 0 24px", gap: 12,
-          }}>
-            <div style={{
-              width: 36, height: 36,
-              border: "3px solid #e8e4de",
-              borderTopColor: "#6366f1",
-              borderRadius: "50%",
-              animation: "spin 0.8s linear infinite",
-            }} />
-            <p style={{
-              fontSize: 13, color: "#8888a0", margin: 0,
-              fontFamily: "'IBM Plex Mono', monospace",
-            }}>
-              Unearthing more fossils...
-            </p>
-          </div>
         )}
 
         {/* Infinite scroll sentinel */}
