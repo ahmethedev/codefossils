@@ -102,6 +102,8 @@ func (s *RepoStore) Query(category, sort, search string, page, perPage int) ([]m
 	// Sort
 	orderBy := "idea_score DESC"
 	switch sort {
+	case "latest":
+		orderBy = "created_at DESC"
 	case "stars":
 		orderBy = "stargazers DESC"
 	case "oldest":

@@ -69,6 +69,7 @@ export default function Controls({
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <div style={{ display: "flex", gap: 6 }}>
           {[
+            { id: "latest", label: "Latest" },
             { id: "score", label: "Best Ideas" },
             { id: "stars", label: "Most Stars" },
             { id: "oldest", label: "Most Stale" },

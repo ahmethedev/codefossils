@@ -11,7 +11,7 @@ import CookieBanner from './components/CookieBanner';
 
 export default function App() {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState("score");
+  const [sortBy, setSortBy] = useState("latest");
   const [searchText, setSearchText] = useState("");
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [showAbout, setShowAbout] = useState(false);
