@@ -1,7 +1,9 @@
+import { useRef } from 'react';
 import { CATEGORIES, timeAgo, scoreGlowColor } from '../utils/helpers';
 import ScoreBadge from './ScoreBadge';
 
-export default function Tombstone({ repo, index, onClick }) {
+export default function Tombstone({ repo, index, animate = true, onClick }) {
+  const shouldAnimate = useRef(animate).current;
   const cat = CATEGORIES.find(c => c.id === repo.category) || CATEGORIES[7];
   const score = repo.idea_score;
   const pushed = timeAgo(repo.pushed_at);
@@ -19,11 +21,13 @@ export default function Tombstone({ repo, index, onClick }) {
         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         position: "relative",
         overflow: "hidden",
-        animationName: "fadeSlideIn",
-        animationDuration: "0.5s",
-        animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-        animationFillMode: "both",
-        animationDelay: `${index * 60}ms`,
+        ...(shouldAnimate ? {
+          animationName: "fadeSlideIn",
+          animationDuration: "0.5s",
+          animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+          animationFillMode: "both",
+          animationDelay: `${index * 60}ms`,
+        } : {}),
       }}
       onMouseEnter={e => {
         e.currentTarget.style.border = "1px solid #c7d2fe";

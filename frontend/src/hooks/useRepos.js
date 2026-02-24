@@ -9,6 +9,7 @@ export function useRepos({ category, sort, search, perPage = 30 } = {}) {
   const [loadingMore, setLoadingMore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
+  const [appendedFrom, setAppendedFrom] = useState(null);
 
   // Reset to page 1 when filters change
   const prevFiltersRef = useRef({ category, sort, search });
@@ -34,7 +35,9 @@ export function useRepos({ category, sort, search, perPage = 30 } = {}) {
       const data = await fetchRepos({ category, sort, search, page, perPage });
       if (isFirstPage) {
         setRepos(data.repos);
+        setAppendedFrom(null);
       } else {
+        setAppendedFrom(repos.length);
         setRepos(prev => [...prev, ...data.repos]);
       }
       setTotal(data.total);
@@ -86,5 +89,5 @@ export function useRepos({ category, sort, search, perPage = 30 } = {}) {
     }
   }, [total, category, sort, search, perPage]);
 
-  return { repos, total, loading, loadingMore, refreshing, error, refresh, reload: load, hasMore, loadMore };
+  return { repos, total, loading, loadingMore, refreshing, error, refresh, reload: load, hasMore, loadMore, appendedFrom };
 }

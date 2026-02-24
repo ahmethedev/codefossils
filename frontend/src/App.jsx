@@ -17,7 +17,7 @@ export default function App() {
   const [showAbout, setShowAbout] = useState(false);
   const [viewMode, setViewMode] = useState("grid");
 
-  const { repos, total, loading, loadingMore, refreshing, error, refresh, hasMore, loadMore } = useRepos({
+  const { repos, total, loading, loadingMore, refreshing, error, refresh, hasMore, loadMore, appendedFrom } = useRepos({
     category: selectedCategory,
     sort: sortBy,
     search: searchText,
@@ -163,31 +163,14 @@ export default function App() {
                   key={repo.id}
                   repo={repo}
                   index={i}
+                  animate={appendedFrom === null || i < appendedFrom}
                   onClick={() => setSelectedRepo(repo)}
                 />
               ))}
+              {loadingMore && Array.from({ length: 6 }).map((_, i) => (
+                <SkeletonCard key={`skeleton-${i}`} index={i} />
+              ))}
             </div>
-
-            {loadingMore && (
-              <div style={{
-                display: "flex", flexDirection: "column", alignItems: "center",
-                padding: "20px 0 0", gap: 10,
-              }}>
-                <div style={{
-                  width: 36, height: 36,
-                  border: "3px solid #e8e4de",
-                  borderTopColor: "#6366f1",
-                  borderRadius: "50%",
-                  animation: "spin 0.8s linear infinite",
-                }} />
-                <p style={{
-                  fontSize: 13, color: "#8888a0", margin: 0,
-                  fontFamily: "'IBM Plex Mono', monospace",
-                }}>
-                  Unearthing more fossils...
-                </p>
-              </div>
-            )}
           </>
         )}
 
